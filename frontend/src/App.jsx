@@ -18,7 +18,7 @@ import ProtectedRoute from "./Components/Route/ProtectedRoute";
 import Profile from "./Components/user/Profile";
 import UpdateProfile from "./Components/user/UpdateProfile";
 
-import "../src/app.css";
+import "../src/App.css";
 import ForgotPassword from "./Components/user/ForgotPassword";
 import UpdatePassword from "./Components/user/UpdatePassword";
 import ResetPassword from "./Components/user/ResetPassword";
