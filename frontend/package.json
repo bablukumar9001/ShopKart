@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm install --legacy-peer-deps && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -41,9 +41,9 @@
     "react-toastify": "^11.0.2",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.2",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.15",
-    "uninstall": "^0.0.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
