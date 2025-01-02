@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { CgMouse } from 'react-icons/cg';
-import "../Home/home.css";
+import "../Home/Home.css";
 import ProductCard from './ProductCard';
 import MetaData from '../Layouts/MetaData';
 import { clearErrors, getProduct } from "../../actions/productAction";
