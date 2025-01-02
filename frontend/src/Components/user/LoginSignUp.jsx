@@ -7,11 +7,13 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import FaceIcon from "@mui/icons-material/Face";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Import toast from react-toastify
+
+// Import toastify styles
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginSignUp = () => {
   const dispatch = useDispatch(); // Initialize Redux dispatch for actions
-  const alert = useAlert(); // Initialize react-alert for notifications
   const navigate = useNavigate(); // For programmatic navigation
   const location = useLocation(); // Get the current route location
 
@@ -79,14 +81,14 @@ const LoginSignUp = () => {
   // Effect to handle errors and authentication state changes
   useEffect(() => {
     if (error) {
-      alert.error(error); // Show error notification
+      toast.error(error); // Show error notification using React Toastify
       dispatch(clearErrors()); // Clear errors in Redux state
     }
 
     if (isAuthenticated) {
-      navigate(redirect); // Redirect to specified route
+      navigate(redirect); // Redirect to specified route after successful login/register
     }
-  }, [dispatch, error, alert, navigate, isAuthenticated, redirect]);
+  }, [dispatch, error, navigate, isAuthenticated, redirect]);
 
   // Handle tab switching between login and register
   const switchTabs = (e, tab) => {

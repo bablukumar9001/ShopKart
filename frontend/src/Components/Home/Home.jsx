@@ -1,13 +1,12 @@
-import React ,{useEffect,Fragment}from 'react'
+import React, { useEffect, Fragment } from 'react';
 import { CgMouse } from 'react-icons/cg';
-import "../Home/home.css"
+import "../Home/home.css";
 import ProductCard from './ProductCard';
 import MetaData from '../Layouts/MetaData';
 import { clearErrors, getProduct } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../Components/Layouts/Loader/Loader";
-import { useAlert } from "react-alert";
-
+import { toast } from 'react-toastify'; // Import toast from react-toastify
 
 // const product = {
 //   name: " black shirt ",
@@ -16,24 +15,20 @@ import { useAlert } from "react-alert";
 //   _id: "2332",
 // }
 
-
 const Home = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, error, products } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Replace alert.error with toast.error
       dispatch(clearErrors());
     }
     dispatch(getProduct());
-  }, [dispatch, error, alert]);
-
+  }, [dispatch, error]);
 
   return (
-   
- <Fragment>
+    <Fragment>
       {loading ? (
         <Loader />
       ) : (
@@ -62,9 +57,7 @@ const Home = () => {
         </Fragment>
       )}
     </Fragment>
-
-   
-  )
+  );
 }
 
-export default Home
+export default Home;

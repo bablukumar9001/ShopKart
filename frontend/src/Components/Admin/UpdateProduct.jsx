@@ -5,8 +5,16 @@ import {
   updateProduct,
   getProductDetails,
 } from "../../actions/productAction";
-import { useAlert } from "react-alert";
-import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import { toast } from "react-toastify"; // Replacing alert with toastify for notifications
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  CircularProgress,
+} from "@mui/material";
 import MetaData from "../Layouts/MetaData";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -19,17 +27,15 @@ import { useParams, useNavigate } from "react-router-dom";
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate();
   const { id: productId } = useParams();
 
-  const { error, product } = useSelector((state) => state.productDetails);
-
-  const {
-    loading,
-    error: updateError,
-    isUpdated,
-  } = useSelector((state) => state.product);
+  const { error, product, loading: productLoading } = useSelector(
+    (state) => state.productDetails
+  );
+  const { loading, error: updateError, isUpdated } = useSelector(
+    (state) => state.product
+  );
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -63,23 +69,22 @@ const UpdateProduct = () => {
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error); // Replaced with toast for notifications
       dispatch(clearErrors());
     }
 
     if (updateError) {
-      alert.error(updateError);
+      toast.error(updateError); // Replaced with toast for notifications
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success("Product Updated Successfully");
+      toast.success("Product Updated Successfully"); // Replaced with toast for notifications
       navigate("/admin/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [
     dispatch,
-    alert,
     error,
     isUpdated,
     navigate,
@@ -90,6 +95,11 @@ const UpdateProduct = () => {
 
   const updateProductSubmitHandler = (e) => {
     e.preventDefault();
+
+    if (!name || !price || !description || !category || !stock) {
+      toast.error("Please fill all fields"); // Replaced with toast for notifications
+      return;
+    }
 
     const formData = new FormData();
     formData.set("name", name);
@@ -108,9 +118,8 @@ const UpdateProduct = () => {
   const updateProductImagesChange = (e) => {
     const files = Array.from(e.target.files);
 
-    setImages([]);
     setImagesPreview([]);
-    setOldImages([]);
+    setImages([]);
 
     files.forEach((file) => {
       const reader = new FileReader();
@@ -212,12 +221,7 @@ const UpdateProduct = () => {
             </div>
 
             <div id="createProductFormFile">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={updateProductImagesChange}
-                multiple
-              />
+              <input type="file" accept="image/*" onChange={updateProductImagesChange} multiple />
             </div>
 
             <div id="createProductFormImage">
@@ -236,9 +240,9 @@ const UpdateProduct = () => {
               variant="contained"
               color="primary"
               type="submit"
-              disabled={loading}
+              disabled={loading || productLoading}
             >
-              Update
+              {loading || productLoading ? <CircularProgress size={24} /> : "Update"}
             </Button>
           </form>
         </div>

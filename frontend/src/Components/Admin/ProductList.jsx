@@ -8,7 +8,7 @@ import {
   deleteProduct,
 } from "../../actions/productAction";
 import { Link, useNavigate } from "react-router-dom";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Import toast
 import { Button } from "@mui/material";
 import MetaData from "../Layouts/MetaData";
 import { Edit, Delete } from "@mui/icons-material";
@@ -17,7 +17,6 @@ import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate();
 
   const { error, products } = useSelector((state) => state.products);
@@ -29,18 +28,18 @@ const ProductList = () => {
 
   useEffect(() => {
     if (error || deleteError) {
-      alert.error(error || deleteError);
+      toast.error(error || deleteError); // Show error notification with react-toastify
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      alert.success("Product Deleted Successfully");
+      toast.success("Product Deleted Successfully"); // Show success notification
       navigate("/admin/dashboard");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
 
     dispatch(getAdminProduct());
-  }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
+  }, [dispatch, error, deleteError, navigate, isDeleted]);
 
   const columns = [
     { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },

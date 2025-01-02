@@ -4,12 +4,11 @@ import Loader from "../Layouts/Loader/Loader";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, forgotPassword } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Import toast from react-toastify
 import MetaData from "../Layouts/MetaData";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const { error, message, loading } = useSelector(
     (state) => state.forgotPassword
@@ -17,8 +16,18 @@ const ForgotPassword = () => {
 
   const [email, setEmail] = useState("");
 
+  const validateEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+  };
+
   const forgotPasswordSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
 
     const myForm = new FormData();
     myForm.set("email", email);
@@ -28,14 +37,14 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Show error toast
       dispatch(clearErrors());
     }
 
     if (message) {
-      alert.success(message);
+      toast.success(message); // Show success toast
     }
-  }, [dispatch, error, alert, message]);
+  }, [dispatch, error, message]);
 
   return (
     <Fragment>

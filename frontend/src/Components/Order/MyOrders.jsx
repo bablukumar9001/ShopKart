@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, myOrders } from "../../actions/orderAction";
 import Loader from "../Layouts/Loader/Loader";
 import { Link } from "react-router-dom";
-import { useAlert } from "react-alert";
+import { toast } from 'react-toastify'; // Importing toast from React Toastify
 import { DataGrid } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 import MetaData from "../Layouts/MetaData";
@@ -12,7 +12,6 @@ import LaunchIcon from "@mui/icons-material/Launch";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const { loading, error, orders } = useSelector((state) => state.myOrders);
   const { user } = useSelector((state) => state.user);
@@ -76,12 +75,12 @@ const MyOrders = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Replace alert.error with toast.error
       dispatch(clearErrors());
     }
 
     dispatch(myOrders());
-  }, [dispatch, alert, error]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>

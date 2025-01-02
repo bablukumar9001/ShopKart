@@ -7,7 +7,7 @@ import ReactStar from "react-rating-stars-component";
 import Loader from "../Layouts/Loader/Loader";
 import MetaData from "../Layouts/MetaData";
 import ReviewCard from "./ReviewCard";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { addItemsToCart } from "../../actions/cartAction";
 
 // Material-UI Carousel
@@ -27,7 +27,6 @@ import { newReview } from "../../actions/productAction"; // Correct import for n
 const ProductDetails = () => {
   const { id } = useParams(); // Access the product ID using useParams
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const { product = {}, loading, error } = useSelector((state) => state.productDetails);
   const { success, error: reviewError } = useSelector(
@@ -53,7 +52,7 @@ const ProductDetails = () => {
 
   const addToCartHandler = () => {
     dispatch(addItemsToCart(id, quantity));
-    alert.success("Item Added To Cart");
+    toast.success("Item Added To Cart");
   };
 
   const submitReviewToggle = () => {
@@ -74,22 +73,22 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors()); // Corrected clearErrors call
     }
 
     if (reviewError) {
-      alert.error(reviewError);
+      toast.error(reviewError);
       dispatch(clearErrors()); // Corrected clearErrors call
     }
 
     if (success) {
-      alert.success("Review Submitted Successfully");
+      toast.success("Review Submitted Successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
 
     dispatch(getProductDetails(id)); // Fetch product details using the id
-  }, [dispatch, id, error, alert, reviewError, success]);
+  }, [dispatch, id, error, reviewError, success]);
 
   if (loading) return <Loader />;
   if (error) return <h2>Error: {error}</h2>;

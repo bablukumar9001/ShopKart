@@ -10,13 +10,12 @@ import PublicIcon from "@mui/icons-material/Public";
 import PhoneIcon from "@mui/icons-material/Phone";
 import TransferWithinAStationIcon from "@mui/icons-material/TransferWithinAStation";
 import { Country, State } from "country-state-city";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Import toast
 import CheckoutSteps from "./CheckoutSteps";
 import { useNavigate } from "react-router-dom";
 
 const Shipping = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate();
   const { shippingInfo } = useSelector((state) => state.cart);
 
@@ -31,7 +30,7 @@ const Shipping = () => {
     e.preventDefault();
 
     if (!/^\d{10}$/.test(phoneNo)) {
-      alert.error("Phone Number must be exactly 10 digits.");
+      toast.error("Phone Number must be exactly 10 digits."); // Show error toast
       return;
     }
 

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import "./ResetPassword.css";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, resetPassword } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Importing toast from react-toastify
 import MetaData from "../Layouts/MetaData";
 import { Box, Button, TextField, Typography, CircularProgress } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -11,7 +11,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate();
   const { token } = useParams(); // Get token from URL params
 
@@ -32,15 +31,15 @@ const ResetPassword = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Display error toast
       dispatch(clearErrors());
     }
 
     if (success) {
-      alert.success("Password Updated Successfully");
+      toast.success("Password Updated Successfully"); // Display success toast
       navigate("/login");
     }
-  }, [dispatch, error, alert, navigate, success]);
+  }, [dispatch, error, navigate, success]);
 
   return (
     <Fragment>

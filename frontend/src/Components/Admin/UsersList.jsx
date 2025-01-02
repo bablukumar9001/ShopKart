@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid"; // Updated DataGrid import
 import "./productList.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Updated toasts import
 import { Button } from "@mui/material"; // Updated Material-UI imports
 import MetaData from "../Layouts/MetaData";
 import EditIcon from "@mui/icons-material/Edit"; // Updated icons import
@@ -11,13 +11,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from "./Sidebar";
 import { getAllUsers, clearErrors, deleteUser } from "../../actions/userAction";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
+import Loader from "../Layouts/Loader/Loader"; // Optional loading component
 
 const UsersList = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate(); // Updated history to useNavigate
 
-  const { error, users } = useSelector((state) => state.allUsers);
+  const { error, users, loading } = useSelector((state) => state.allUsers);
 
   const {
     error: deleteError,
@@ -31,27 +32,26 @@ const UsersList = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Replaced alert with toast for error
       dispatch(clearErrors());
     }
 
     if (deleteError) {
-      alert.error(deleteError);
+      toast.error(deleteError); // Replaced alert with toast for error
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      alert.success(message);
+      toast.success(message); // Replaced alert with toast for success
       navigate("/admin/users");
       dispatch({ type: DELETE_USER_RESET });
     }
 
     dispatch(getAllUsers());
-  }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
+  }, [dispatch, error, deleteError, isDeleted, message, navigate]);
 
   const columns = [
     { field: "id", headerName: "User ID", minWidth: 180, flex: 0.8 },
-
     {
       field: "email",
       headerName: "Email",
@@ -64,7 +64,6 @@ const UsersList = () => {
       minWidth: 150,
       flex: 0.5,
     },
-
     {
       field: "role",
       headerName: "Role",
@@ -73,7 +72,6 @@ const UsersList = () => {
       cellClassName: (params) =>
         params.row.role === "admin" ? "greenColor" : "redColor", // Updated syntax
     },
-
     {
       field: "actions",
       flex: 0.3,
@@ -94,17 +92,14 @@ const UsersList = () => {
     },
   ];
 
-  const rows = [];
-
-  users &&
-    users.forEach((item) => {
-      rows.push({
+  const rows = users
+    ? users.map((item) => ({
         id: item._id,
         role: item.role,
         email: item.email,
         name: item.name,
-      });
-    });
+      }))
+    : [];
 
   return (
     <Fragment>
@@ -115,14 +110,18 @@ const UsersList = () => {
         <div className="productListContainer">
           <h1 id="productListHeading">ALL USERS</h1>
 
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            disableSelectionOnClick
-            className="productListTable"
-            autoHeight
-          />
+          {loading ? (
+            <Loader /> // You can implement a loader here
+          ) : (
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={10}
+              disableSelectionOnClick
+              className="productListTable"
+              autoHeight
+            />
+          )}
         </div>
       </div>
     </Fragment>

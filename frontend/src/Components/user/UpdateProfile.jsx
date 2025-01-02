@@ -5,14 +5,16 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import FaceIcon from "@mui/icons-material/Face";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, updateProfile, loadUser } from "../../actions/userAction";
-import { useAlert } from "react-alert";
+import { useNavigate } from "react-router-dom";
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
 import MetaData from "../Layouts/MetaData";
-import { useNavigate } from "react-router-dom";
+
+// Import React Toastify
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateProfile = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.user);
@@ -27,27 +29,16 @@ const UpdateProfile = () => {
   const updateProfileSubmit = (e) => {
     e.preventDefault();
 
-  
-
     const myForm = new FormData();
     myForm.set("name", name);
     myForm.set("email", email);
 
     // Append avatar only if a file is selected
-
     if (avatar) {
       myForm.set("avatar", avatar);
     } else {
       console.warn("No avatar selected for update.");
     }
-
-    // Log FormData contents
-  // for (let pair of myForm.entries()) {
-  //   console.log(pair[0], pair[1]); // Log each key-value pair in FormData
-  // }
-
-    // console.log(avatar)
-    // console.log(myForm)
 
     dispatch(updateProfile(myForm));
   };
@@ -55,22 +46,22 @@ const UpdateProfile = () => {
   // File input change handler
   const updateProfileDataChange = (e) => {
     const file = e.target.files[0];
-  
+
     if (!file) {
       console.error("No file selected for upload.");
       return;
     }
-  
+
     // Ensure the selected file is an image
     const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (!validImageTypes.includes(file.type)) {
       console.error("Invalid file type. Please upload an image (JPEG/PNG).");
       return;
     }
-  
+
     // Create a FileReader instance
     const reader = new FileReader();
-  
+
     // Handle file read
     reader.onload = () => {
       if (reader.readyState === FileReader.DONE) {
@@ -78,11 +69,11 @@ const UpdateProfile = () => {
         setAvatar(file); // Store the actual file
       }
     };
-  
+
     // Read the file as a data URL
     reader.readAsDataURL(file);
   };
-  
+
   // Load user data on component mount and handle updates
   useEffect(() => {
     if (user) {
@@ -92,18 +83,18 @@ const UpdateProfile = () => {
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error); // Show error notification with react-toastify
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success("Profile Updated Successfully");
+      toast.success("Profile Updated Successfully"); // Show success notification
       dispatch(loadUser()); // Reload user data
       navigate("/account");
 
       dispatch({ type: UPDATE_PROFILE_RESET });
     }
-  }, [dispatch, error, alert, navigate, user, isUpdated]);
+  }, [dispatch, error, toast, navigate, user, isUpdated]);
 
   return (
     <Fragment>

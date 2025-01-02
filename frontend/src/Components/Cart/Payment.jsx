@@ -3,7 +3,7 @@ import CheckoutSteps from "./CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../Layouts/MetaData";
 import { Typography } from "@mui/material";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Import toast
 import {
   CardNumberElement,
   CardCvcElement,
@@ -24,7 +24,6 @@ const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
   const dispatch = useDispatch();
-  const alert = useAlert();
   const stripe = useStripe();
   const elements = useElements();
   const payBtn = useRef(null);
@@ -88,8 +87,7 @@ const Payment = () => {
 
       if (result.error) {
         payBtn.current.disabled = false;
-
-        alert.error(result.error.message);
+        toast.error(result.error.message); // Use toast for error
       } else {
         if (result.paymentIntent.status === "succeeded") {
           order.paymentInfo = {
@@ -98,28 +96,28 @@ const Payment = () => {
           };
 
           dispatch(createOrder(order));
-
+          toast.success("Payment Successful!"); // Success toast
           navigate("/success");
         } else {
-          alert.error("There's some issue while processing payment ");
+          toast.error("There's an issue while processing payment."); // Error toast
         }
       }
     } catch (error) {
       payBtn.current.disabled = false;
-      alert.error(error.response.data.message);
+      toast.error(error.response.data.message); // Use toast for error
     }
   };
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Show error toast
       dispatch(clearErrors());
     }
-  }, [dispatch, error, alert]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>
-      <MetaData title="Payment"  />
+      <MetaData title="Payment" />
       <CheckoutSteps activeStep={2} />
       <div className="paymentContainer">
         <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>

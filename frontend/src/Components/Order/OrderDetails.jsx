@@ -6,25 +6,27 @@ import { Link, useParams } from "react-router-dom";  // Import useParams from re
 import { Typography } from "@mui/material";
 import { getOrderDetails, clearErrors } from "../../actions/orderAction";
 import Loader from "../Layouts/Loader/Loader";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Import toast from react-toastify
+
+// Import toastify styles
+import "react-toastify/dist/ReactToastify.css";
 
 const OrderDetails = () => {
   const { order, error, loading } = useSelector((state) => state.orderDetails);
 
   const dispatch = useDispatch();
-  const alert = useAlert();
-  
+
   // Get the order ID from the URL using useParams
   const { id } = useParams();  // Use destructuring to get the order ID
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Use toast.error instead of alert.error
       dispatch(clearErrors());
     }
 
     dispatch(getOrderDetails(id));  // Fetch the order details using the ID from useParams
-  }, [dispatch, alert, error, id]);  // Include id in the dependency array
+  }, [dispatch, error, id]);  // Include id in the dependency array
 
   return (
     <Fragment>

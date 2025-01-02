@@ -8,16 +8,16 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
-import { useAlert } from "react-alert";
-import { logout } from "../../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../actions/userAction";
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
+import "react-toastify/dist/ReactToastify.css"; // Add this line to include Toastify styles
 
 const UserOptions = ({ user }) => {
   const { cartItems } = useSelector((state) => state.cart);
 
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const alert = useAlert();
   const dispatch = useDispatch();
 
   // Define functions first
@@ -39,7 +39,7 @@ const UserOptions = ({ user }) => {
 
   const logoutUser = () => {
     dispatch(logout());
-    alert.success("Logout Successfully");
+    toast.success("Logout Successfully"); // Replaced alert.success with toast.success
   };
 
   // Define the options array after the functions are initialized
@@ -53,7 +53,6 @@ const UserOptions = ({ user }) => {
         />
       ),
       name: `Cart(${cartItems.length})`,
-     
       func: navigateToCart,
     },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
@@ -96,6 +95,7 @@ const UserOptions = ({ user }) => {
           />
         ))}
       </SpeedDial>
+      <ToastContainer /> {/* Add ToastContainer to show the toast notifications */}
     </Fragment>
   );
 };

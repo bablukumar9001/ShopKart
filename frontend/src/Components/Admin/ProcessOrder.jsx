@@ -6,7 +6,8 @@ import SideBar from "./Sidebar";
 import { getOrderDetails, clearErrors, updateOrder } from "../../actions/orderAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Layouts/Loader/Loader";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Import toast from react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Import styles
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
 import "./processOrder.css";
@@ -33,23 +34,23 @@ const ProcessOrder = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error); // Show error toast
       dispatch(clearErrors());
     }
 
     if (updateError) {
-      alert.error(updateError);
+      toast.error(updateError); // Show error toast
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success("Order Updated Successfully");
+      toast.success("Order Updated Successfully"); // Show success toast
       navigate("/admin/orders");
       dispatch({ type: UPDATE_ORDER_RESET });
     }
 
     dispatch(getOrderDetails(id));
-  }, [dispatch, alert, error, id, isUpdated, updateError, navigate]);
+}, [dispatch, alert, error, id, isUpdated, updateError, navigate]);
 
   return (
     <Fragment>

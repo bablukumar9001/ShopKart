@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify"; // Updated toasts import
 import { Button, TextField, Select, MenuItem } from "@mui/material"; // Updated Material-UI imports
 import MetaData from "../Layouts/MetaData";
 import { VerifiedUser, Person, MailOutline } from "@mui/icons-material"; // Updated icons import
@@ -16,7 +16,6 @@ import { useNavigate, useParams } from "react-router-dom"; // Updated navigation
 
 const UpdateUser = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate(); // Updated history to navigate
   const { id: userId } = useParams(); // Updated match.params.id
 
@@ -42,21 +41,21 @@ const UpdateUser = () => {
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (updateError) {
-      alert.error(updateError);
+      toast.error(updateError);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success("User Updated Successfully");
+      toast.success("User Updated Successfully");
       navigate("/admin/users");
       dispatch({ type: UPDATE_USER_RESET });
     }
-  }, [dispatch, alert, error, navigate, isUpdated, updateError, user, userId]);
+  }, [dispatch, error, navigate, isUpdated, updateError, user, userId]);
 
   const updateUserSubmitHandler = (e) => {
     e.preventDefault();
