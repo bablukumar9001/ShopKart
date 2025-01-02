@@ -57,9 +57,15 @@ const userRoute = require("./Routes/userRoute")
 const orderRoute = require("./Routes/orderRoute")
 const payment = require("./Routes/paymentRoute");
 
+//test route 
+
+app.get("/",(req,res)=>{
+  res.status(200).send("Hello, welcome to the Shopkart API's")
+})
 
 
 app.use("/api/v1",productRoute)
+
 app.use("/api/v1",userRoute)
 app.use("/api/v1",orderRoute)
 app.use("/api/v1",payment)
