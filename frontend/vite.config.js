@@ -5,8 +5,9 @@ export default ({ mode }) => {
   // Load environment variables based on the mode (e.g., development or production)
   const env = loadEnv(mode, process.cwd());
 
-  // Log the environment variable for debugging
-  console.log("VITE_BASE_URL:", env.VITE_BASE_URL);
+
+console.log(env.VITE_BASE_URL)
+
 
   return defineConfig({
     plugins: [react()],
@@ -18,7 +19,7 @@ export default ({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: env.VITE_BASE_URL || 'http://localhost:9000',  // Access environment variable here
+          target: env.VITE_BASE_URL ,  // Access environment variable here
           changeOrigin: true, // Change the origin header to the target URL
           secure: false, // Allow self-signed SSL certificates
         },
