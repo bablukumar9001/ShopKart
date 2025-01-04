@@ -5,21 +5,30 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': '/src', // Adjust as necessary
+      '@': '/src',
     },
   },
   server: {
     proxy: {
       '/api': {
-        target: 'https://shopkart-sarq.onrender.com/', // Your backend server URL
-        changeOrigin: true, // Ensures the origin of the host header matches the target
-        secure: false, // Allows proxying to servers with self-signed certificates
+        target: 'https://shopkart-sarq.onrender.com/',
+        changeOrigin: true,
+        secure: false,
       },
     },
   },
+  optimizeDeps: {
+    include: ['redux', 'redux-thunk'],  // Ensure these dependencies are optimized
+    exclude: ['redux-devtools-extension'],  // If you have any unwanted dependencies
+  },
   build: {
     rollupOptions: {
-      external: ['redux'], // Externalize redux to avoid import resolution issues
+      external: [],  // Don't mark 'redux' as external for the build process
+      output: {
+        manualChunks: undefined, // Remove manual chunking
+      },
     },
+    chunkSizeWarningLimit: 1000,
   },
 });
+

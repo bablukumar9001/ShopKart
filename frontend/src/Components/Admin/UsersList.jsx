@@ -1,22 +1,22 @@
 import React, { Fragment, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid"; // Updated DataGrid import
+import { DataGrid } from "@mui/x-data-grid";
 import "./productList.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify"; // Updated toasts import
-import { Button } from "@mui/material"; // Updated Material-UI imports
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Ensure toastify CSS is imported
+import { Button } from "@mui/material";
 import MetaData from "../Layouts/MetaData";
-import EditIcon from "@mui/icons-material/Edit"; // Updated icons import
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from "./Sidebar";
 import { getAllUsers, clearErrors, deleteUser } from "../../actions/userAction";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
-import Loader from "../Layouts/Loader/Loader"; // Optional loading component
+import Loader from "../Layouts/Loader/Loader";
 
 const UsersList = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
-  const navigate = useNavigate(); // Updated history to useNavigate
+  const navigate = useNavigate();
 
   const { error, users, loading } = useSelector((state) => state.allUsers);
 
@@ -32,17 +32,17 @@ const UsersList = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error); // Replaced alert with toast for error
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (deleteError) {
-      toast.error(deleteError); // Replaced alert with toast for error
+      toast.error(deleteError);
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      toast.success(message); // Replaced alert with toast for success
+      toast.success(message);
       navigate("/admin/users");
       dispatch({ type: DELETE_USER_RESET });
     }
@@ -70,7 +70,7 @@ const UsersList = () => {
       minWidth: 150,
       flex: 0.3,
       cellClassName: (params) =>
-        params.row.role === "admin" ? "greenColor" : "redColor", // Updated syntax
+        params.row.role === "admin" ? "greenColor" : "redColor",
     },
     {
       field: "actions",
@@ -111,7 +111,7 @@ const UsersList = () => {
           <h1 id="productListHeading">ALL USERS</h1>
 
           {loading ? (
-            <Loader /> // You can implement a loader here
+            <Loader />
           ) : (
             <DataGrid
               rows={rows}
