@@ -22,6 +22,7 @@ console.log(env.VITE_BASE_URL)
           target: env.VITE_BASE_URL ,  // Access environment variable here
           changeOrigin: true, // Change the origin header to the target URL
           secure: false, // Allow self-signed SSL certificates
+          rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },
