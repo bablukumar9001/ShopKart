@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://shopkart-sarq.onrender.com/',
+        target: env.VITE_BASE_URL, // Use environment variable for backend URL
         changeOrigin: true,
         secure: false,
       },
