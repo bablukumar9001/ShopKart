@@ -5,9 +5,19 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 
+// Base URL from environment variables
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
+
+/**
+ * Constructs a full API URL by appending the given path to the base URL.
+ * @param {string} path - The API endpoint path (e.g., "/api/v1/product/:id").
+ * @returns {string} - The full URL.
+ */
+const getFullUrl = (path) => `${API_BASE_URL}${path}`;
+
 // Add to Cart
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-  const { data } = await axios.get(`/api/v1/product/${id}`);
+  const { data } = await axios.get(getFullUrl(`/api/v1/product/${id}`));
 
   dispatch({
     type: ADD_TO_CART,
@@ -24,7 +34,7 @@ export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
-// REMOVE FROM CART
+// Remove from Cart
 export const removeItemsFromCart = (id) => async (dispatch, getState) => {
   dispatch({
     type: REMOVE_CART_ITEM,
@@ -34,7 +44,7 @@ export const removeItemsFromCart = (id) => async (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
-// SAVE SHIPPING INFO
+// Save Shipping Info
 export const saveShippingInfo = (data) => async (dispatch) => {
   dispatch({
     type: SAVE_SHIPPING_INFO,
