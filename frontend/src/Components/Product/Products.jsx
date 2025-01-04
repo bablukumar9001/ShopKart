@@ -31,6 +31,7 @@ const Products = () => {
   const [price, setPrice] = useState([0, 5000]);
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
+  const [errorShown, setErrorShown] = useState(false);  // Track if error has been shown
 
   const { products, loading, error, productsCount, resultPerPage, filteredProductsCount } = useSelector(
     (state) => state.products
@@ -47,12 +48,13 @@ const Products = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(error); // Display error using React Toastify
+    if (error && !errorShown) {
+      toast.error(error); // Show error only if it hasn't been shown yet
+      setErrorShown(true); // Set flag to true once the error is shown
       dispatch(clearErrors());
     }
     dispatch(getProduct(keyword, currentPage, price, category, ratings));
-  }, [dispatch, keyword, error, currentPage, price, category, ratings]);
+  }, [dispatch, keyword, error, currentPage, price, category, ratings, errorShown]);  // Include errorShown in the dependency array
 
   return (
     <Fragment>

@@ -18,9 +18,9 @@ export default ({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: env.VITE_BASE_URL, // Access environment variable here
-          changeOrigin: true,
-          secure: false,
+          target: env.VITE_BASE_URL || 'http://localhost:9000',  // Access environment variable here
+          changeOrigin: true, // Change the origin header to the target URL
+          secure: false, // Allow self-signed SSL certificates
         },
       },
     },

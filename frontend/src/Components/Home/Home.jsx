@@ -8,12 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../Components/Layouts/Loader/Loader";
 import { toast } from 'react-toastify'; // Import toast from react-toastify
 
-// const product = {
-//   name: " black shirt ",
-//   price: "4000",
-//   images: [{ url: "https://rukminim2.flixcart.com/image/832/832/xif0q/shirt/g/b/1/l-000001-dhaduk-original-imah3avukk7znv9j.jpeg?q=70&crop=false" }],
-//   _id: "2332",
-// }
+
 
 const Home = () => {
   const dispatch = useDispatch();
