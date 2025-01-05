@@ -16,7 +16,6 @@ const ProcessOrder = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const { order, error, loading } = useSelector((state) => state.orderDetails);
   const { error: updateError, isUpdated } = useSelector((state) => state.order);
@@ -50,7 +49,7 @@ const ProcessOrder = () => {
     }
 
     dispatch(getOrderDetails(id));
-}, [dispatch, alert, error, id, isUpdated, updateError, navigate]);
+  }, [dispatch, error, id, isUpdated, updateError, navigate]);
 
   return (
     <Fragment>

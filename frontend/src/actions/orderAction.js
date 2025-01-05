@@ -1,4 +1,4 @@
-import { 
+import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAIL,
@@ -22,21 +22,14 @@ import {
 
 import axios from "axios";
 
-// Base URL from environment variables
-const API_BASE_URL = import.meta.env.VITE_BASE_URL;
-
-/**
- * Constructs a full API URL by appending the given path to the base URL.
- * @param {string} path - The API endpoint path (e.g., "/api/v1/order/new").
- * @returns {string} - The full URL.
- */
-const getFullUrl = (path) => `${API_BASE_URL}${path}`;
+const API_BASE_URL = import.meta.env.VITE_BASE_URL; // Base URL for all API requests
 
 // Helper function to configure headers
 const getConfig = (contentType = "application/json") => ({
   headers: {
     "Content-Type": contentType,
   },
+  withCredentials: true // Add credentials here to send cookies with the request
 });
 
 // Create Order
@@ -45,7 +38,7 @@ export const createOrder = (order) => async (dispatch) => {
     dispatch({ type: CREATE_ORDER_REQUEST });
 
     const config = getConfig();
-    const { data } = await axios.post(getFullUrl("/api/v1/order/new"), order, config);
+    const { data } = await axios.post(`${API_BASE_URL}/api/v1/order/new`, order, config);
 
     dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
   } catch (error) {
@@ -61,7 +54,9 @@ export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
 
-    const { data } = await axios.get(getFullUrl("/api/v1/orders/me"));
+    const { data } = await axios.get(`${API_BASE_URL}/api/v1/orders/me`, {
+      withCredentials: true, // Ensures cookies are sent with the request
+    });
 
     dispatch({ type: MY_ORDERS_SUCCESS, payload: data.orders });
   } catch (error) {
@@ -77,7 +72,9 @@ export const getAllOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
 
-    const { data } = await axios.get(getFullUrl("/api/v1/admin/orders"));
+    const { data } = await axios.get(`${API_BASE_URL}/api/v1/admin/orders`, {
+      withCredentials: true, // Ensures cookies are sent with the request
+    });
 
     dispatch({ type: ALL_ORDERS_SUCCESS, payload: data.orders });
   } catch (error) {
@@ -94,7 +91,7 @@ export const updateOrder = (id, order) => async (dispatch) => {
     dispatch({ type: UPDATE_ORDER_REQUEST });
 
     const config = getConfig();
-    const { data } = await axios.put(getFullUrl(`/api/v1/admin/order/${id}`), order, config);
+    const { data } = await axios.put(`${API_BASE_URL}/api/v1/admin/order/${id}`, order, config);
 
     dispatch({ type: UPDATE_ORDER_SUCCESS, payload: data.success });
   } catch (error) {
@@ -110,7 +107,9 @@ export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
 
-    const { data } = await axios.delete(getFullUrl(`/api/v1/admin/order/${id}`));
+    const { data } = await axios.delete(`${API_BASE_URL}/api/v1/admin/order/${id}`, {
+      withCredentials: true // Add credentials here
+    });
 
     dispatch({ type: DELETE_ORDER_SUCCESS, payload: data.success });
   } catch (error) {
@@ -126,7 +125,9 @@ export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(getFullUrl(`/api/v1/order/${id}`));
+    const { data } = await axios.get(`${API_BASE_URL}/api/v1/order/${id}`, {
+      withCredentials: true // Add credentials here
+    });
 
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
   } catch (error) {
