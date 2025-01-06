@@ -47,6 +47,9 @@ const Payment = () => {
     totalPrice: orderInfo.totalPrice,
   };
 
+const API_BASE_URL = import.meta.env.VITE_BASE_URL  
+
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -57,9 +60,10 @@ const Payment = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true
       };
       const { data } = await axios.post(
-        "/api/v1/payment/process",
+        `${API_BASE_URL}/api/v1/payment/process`,
         paymentData,
         config
       );

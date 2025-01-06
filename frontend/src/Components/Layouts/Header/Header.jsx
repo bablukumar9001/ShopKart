@@ -1,4 +1,4 @@
-import React, {useEffect}from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -33,15 +33,18 @@ const Header = () => {
     <>
       <AppBar position="static" sx={{ backgroundColor: "white", color: "#333" }}>
         <Toolbar>
+          {/* Hamburger Menu Icon */}
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, display: { xs: "flex", sm: "none" } }}
             onClick={toggleDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
+
+          {/* Logo */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/" style={{ textDecoration: "none", color: "#333" }}>
               <img
@@ -51,6 +54,8 @@ const Header = () => {
               />
             </Link>
           </Typography>
+
+          {/* Desktop Navigation and Icons */}
           <Box sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center" }}>
             {navLinks.slice(0, 4).map((link) => (
               <Button
@@ -75,6 +80,8 @@ const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
+
+      {/* Drawer for Mobile */}
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box
           sx={{ width: 250 }}
@@ -89,6 +96,18 @@ const Header = () => {
               </ListItem>
             ))}
           </List>
+          <Box sx={{ display: "flex", justifyContent: "space-around", mt: 2 }}>
+            {/* Mobile Icons */}
+            <IconButton color="inherit" component={Link} to="/search">
+              <SearchIcon />
+            </IconButton>
+            <IconButton color="inherit" component={Link} to="/cart">
+              <ShoppingCartIcon />
+            </IconButton>
+            <IconButton color="inherit" component={Link} to="/login">
+              <AccountCircleIcon />
+            </IconButton>
+          </Box>
         </Box>
       </Drawer>
     </>
