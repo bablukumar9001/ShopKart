@@ -52,11 +52,22 @@ function App() {
   
 
   async function getStripeApiKey() {
-    const { data } = await axios.get(`${API_BASE_URL}/api/v1/stripeapikey`,{
-      withCredentials: true, // Ensures cookies are sent with the request
-    });
-    setStripeApiKey(data.stripeApiKey);
+    try {
+      const { data } = await axios.get(`${API_BASE_URL}/api/v1/stripeapikey`, {
+        withCredentials: true, // Ensures cookies are sent with the request
+      });
+  
+      if (data?.stripeApiKey) {
+        setStripeApiKey(data.stripeApiKey);
+      } else {
+        console.error("Stripe API key not found in the response:", data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch Stripe API key:", error.message);
+      // Optionally, you can set an error state or show a message to the user
+    }
   }
+  
 
   useEffect(() => {
     // Load custom fonts
@@ -73,7 +84,7 @@ function App() {
     getStripeApiKey();
   }, []);
 
-   console.log("stripeeeeee apikey",stripeApiKey);
+  //  console.log("stripeeeeee apikey",stripeApiKey);
    
 
 
