@@ -43,12 +43,18 @@ import UsersList from "./Components/Admin/UsersList";
 import UpdateUser from "./Components/Admin/UpdateUser";
 import ProductReviews from "./Components/Admin/ProductReviews";
 
+const API_BASE_URL = import.meta.env.VITE_BASE_URL  
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState("");
 
+  
+
   async function getStripeApiKey() {
-    const { data } = await axios.get("/api/v1/stripeapikey");
+    const { data } = await axios.get(`${API_BASE_URL}/api/v1/stripeapikey`,{
+      withCredentials: true, // Ensures cookies are sent with the request
+    });
     setStripeApiKey(data.stripeApiKey);
   }
 
