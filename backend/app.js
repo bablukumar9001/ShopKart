@@ -17,7 +17,7 @@ app.use(cookieParser())
 // Define allowed origins dynamically
 
 const allowedOrigins = [
-  "http://localhost:5173", // Frontend (Development)
+  "http://localhost:5176" ||"http://localhost:5173", // Frontend (Development)
   process.env.FRONTEND_URL, // Frontend (Deployed)
 ];
 

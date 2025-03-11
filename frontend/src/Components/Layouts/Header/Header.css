@@ -9,3 +9,61 @@
   height: 56px;
   border-radius: 100%;
 }
+
+/* Header.css */
+.MuiAppBar-root {
+  transition: all 0.3s ease-in-out;
+}
+
+.MuiDrawer-paper {
+  border-radius: 0 10px 10px 0;
+}
+
+.logo-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Animation for nav links */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #f50057;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Active nav link */
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Cart badge animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.MuiBadge-badge {
+  animation: pulse 1.5s infinite;
+}

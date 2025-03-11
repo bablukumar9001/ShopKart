@@ -11,19 +11,18 @@
 
 .profileContainer {
   display: flex;
-  height: calc(100vh - 60px); /* Subtract header height */
   width: 100%;
-  position: absolute; /* Change to absolute */
-  top: 60px; /* Position below the header */
-  left: 0;
+  min-height: 90vh;
   background-color: white;
+  padding: 2rem 0;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .profileContainer > div {
   display: flex;
-  height: 100vh;
-  width: 100vw;
-  max-width: 100%;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -32,13 +31,14 @@
 .profileContainer > div:first-child > h1 {
   color: rgba(0, 0, 0, 0.555);
   font: 500 2.2vmax "Roboto";
-  transform: translateX(-10vmax) translateY(-2vmax);
+  margin-bottom: 2rem;
 }
 
 .profileContainer > div:first-child > img {
   width: 20vmax;
   border-radius: 100%;
   transition: all 0.5s;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .profileContainer > div:first-child > img:hover {
@@ -47,19 +47,21 @@
 
 .profileContainer > div:first-child > a {
   border: none;
-  background-color: tomato;
+  background-color: #f50057;
   font: 400 1vmax "Roboto";
   color: white;
   text-decoration: none;
-  padding: 0.5vmax;
-  width: 30%;
+  padding: 0.8vmax 2vmax;
+  border-radius: 30px;
   margin: 4vmax;
   text-align: center;
   transition: all 0.5s;
 }
 
 .profileContainer > div:first-child > a:hover {
-  background-color: rgb(204, 78, 56);
+  background-color: #c51162;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(197, 17, 98, 0.3);
 }
 
 .profileContainer > div:last-child {
@@ -70,14 +72,15 @@
 }
 
 .profileContainer > div:last-child > div > h4 {
-  color: black;
-  font: 400 1.2vmax "Roboto";
+  color: #333;
+  font: 500 1.2vmax "Roboto";
+  margin-bottom: 0.5rem;
 }
 
 .profileContainer > div:last-child > div > p {
-  color: rgba(0, 0, 0, 0.418);
-  font: 400 1vmax cursive;
-  margin: 0.2vmax;
+  color: rgba(0, 0, 0, 0.6);
+  font: 400 1vmax "Roboto";
+  margin: 0.2vmax 0 1.5vmax 0;
 }
 
 .profileContainer > div:last-child > div:last-child {
@@ -88,18 +91,21 @@
 
 .profileContainer > div:last-child > div:last-child > a {
   border: none;
-  background-color: rgb(68, 68, 68);
+  background-color: #333;
   font: 400 1vmax "Roboto";
   color: white;
   text-decoration: none;
-  padding: 0.5vmax;
+  padding: 0.8vmax;
+  border-radius: 30px;
   text-align: center;
   transition: all 0.5s;
   margin: 1vmax 0;
 }
 
 .profileContainer > div:last-child > div:last-child > a:hover {
-  background-color: rgb(31, 31, 31);
+  background-color: #000;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 600px) {
@@ -109,12 +115,12 @@
 
   .profileContainer > div:first-child > h1 {
     font: 500 3.2vmax "Roboto";
-    transform: translateY(-2vmax);
+    margin-top: 3rem;
   }
 
   .profileContainer > div:first-child > a {
     font: 400 1.7vmax "Roboto";
-    padding: 1vmax;
+    padding: 1vmax 2vmax;
   }
 
   .profileContainer > div:last-child {
@@ -123,12 +129,12 @@
   }
 
   .profileContainer > div:last-child > div > h4 {
-    font: 400 2.5vmax "Roboto";
+    font: 500 2.5vmax "Roboto";
   }
 
   .profileContainer > div:last-child > div > p {
-    font: 400 2vmax cursive;
-    margin: 0.5vmax 0;
+    font: 400 2vmax "Roboto";
+    margin: 0.5vmax 0 2vmax 0;
   }
 
   .profileContainer > div:last-child > div:last-child > a {

@@ -1,4 +1,3 @@
-// import { Rating } from "@material-ui/lab";
 import React from "react";
 import ReactStar from "react-rating-stars-component";
 
@@ -13,7 +12,7 @@ const ReviewCard = ({ review }) => {
 
   return (
     <div className="reviewCard">
-      <img  src={profilePng} alt="User" />
+      <img src={profilePng} alt="User" />
       <p>{review.name}</p>
       <ReactStar {...options} />
       <span className="reviewCardComment">{review.comment}</span>
@@ -21,4 +20,4 @@ const ReviewCard = ({ review }) => {
   );
 };
 
-export default ReviewCard;
+export default ReviewCard; 

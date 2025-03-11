@@ -1,3 +1,17 @@
+.cart-item-card {
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.cart-item-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
 .CartItemCard {
   display: flex;
   padding: 1vmax;
@@ -33,6 +47,10 @@
 }
 
 @media screen and (max-width: 600px) {
+  .cart-item-card {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
   .CartItemCard {
     padding: 3vmax;
     height: 25vmax;

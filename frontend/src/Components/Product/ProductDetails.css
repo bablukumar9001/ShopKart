@@ -181,27 +181,63 @@
 }
 
 .reviewCard {
-  flex: none;
-
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.226);
-  border: 1px solid rgba(56, 56, 56, 0.116);
-  width: 30vmax;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.reviewCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.reviewCard-header {
+  display: flex;
   align-items: center;
-  margin: 1vmax;
-  padding: 3vmax;
+  margin-bottom: 15px;
 }
-.reviewCard > img {
-  width: 5vmax;
+
+.reviewCard-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  background-color: #f50057;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
 }
-.reviewCard > p {
-  color: rgba(0, 0, 0, 0.836);
-  font: 600 0.9vmax "Roboto";
+
+.reviewCard-user {
+  flex: 1;
 }
-.reviewCardComment {
-  color: rgba(0, 0, 0, 0.445);
-  font: 300 0.8vmax cursive;
+
+.reviewCard-username {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.reviewCard-date {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.reviewCard-rating {
+  margin-bottom: 10px;
+}
+
+.reviewCard-comment {
+  flex: 1;
+  color: #333;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .noReviews {
@@ -210,6 +246,32 @@
   color: rgba(0, 0, 0, 0.548);
 }
 
+/* Product Images Slider */
+.product-main-slider {
+  margin-bottom: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-thumbs-slider .swiper-slide {
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.product-thumbs-slider .swiper-slide-thumb-active {
+  opacity: 1;
+  border-color: #f50057 !important;
+}
+
+/* Tab Panel */
+.MuiTabPanel-root {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Styles */
 @media screen and (max-width: 600px) {
   .ProductDetails {
     flex-direction: column;
@@ -293,5 +355,13 @@
   }
   .reviewCardComment {
     font: 300 5vw cursive;
+  }
+
+  .product-main-slider {
+    height: 300px;
+  }
+  
+  .product-thumbs-slider {
+    display: none;
   }
 }

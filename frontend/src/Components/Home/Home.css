@@ -13,40 +13,53 @@
 } */
 
 .banner {
-   background-image: linear-gradient(to right, #635dc0, #3027ae);
-   height: 100vmin;
-   display: flex;
-   flex-direction: column;
-   text-align: center;
-   align-items: center;
-   justify-content: center;
-   color: #ffffff;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/banner-bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vmin;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
 }
 
 .banner > h1 {
   margin: 5vmax;
-
   font: 600 2.5vmax "Roboto";
+  animation: fadeInDown 1s ease-out;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .banner > p {
   font: 300 1.4vmax "Lucida Sans";
+  animation: fadeInUp 1s ease-out;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .banner > a > button {
   margin-bottom: 5vmax;
   cursor: pointer;
-  background-color: white;
-  border: 1px solid white;
-  border-radius: 0;
-  padding: 1vmax;
+  background-color: #f50057;
+  border: 1px solid #f50057;
+  border-radius: 25px;
+  padding: 1vmax 2vmax;
   transition: all 0.5s;
-  width: 9vmax;
+  width: auto;
   font: 500 1vmax "Roboto";
-}
-.banner > a > button:hover {
-  background-color: rgba(255, 255, 255, 0);
   color: white;
+  animation: fadeIn 1.5s ease-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.banner > a > button:hover {
+  background-color: rgba(245, 0, 87, 0.8);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .banner::after {
@@ -57,8 +70,39 @@
   position: absolute;
   top: 0%;
   left: 0;
-  clip-path: polygon(100% 68%, 0 100%, 100% 68%);
+  clip-path: polygon(100% 68%, 0 100%, 100% 100%);
   max-width: 100%;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .homeHeading {
@@ -146,4 +190,4 @@
     margin: 0 0.5vmax;
     font: 300 1vmax "Roboto";
   }
-}
+} 
